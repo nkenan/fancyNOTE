@@ -1,0 +1,8 @@
+<h1>{{title}}</h1>
+<ul class="notes ">
+  <p>{{#if content}}{{content}}{{else}}No content{{/if}}</p>
+  <p id="author">{{#if author}}{{author}}{{else}}No author information provided.{{/if}}</p>
+  <p id="created">{{#if created}}{{created}}{{else}}There is no date of creation provided.{{/if}}</p>
+  <p id="changes">{{#if changes.date}}{{changes.date}}{{else}}No changes made to this note.{{/if}}</p>
+  <p id="keywords">{{#if keywords}}{{keywords}}{{else}}There are no keywords.{{/if}}</p>
+</ul>

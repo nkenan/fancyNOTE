@@ -1,2 +1,11 @@
 <h1>{{title}}</h1>
-<p>{{content}}</p>
+<ul class="notes">
+  {{#each notes}}
+  <h2><a href="/note/{{_id}}">{{title}}</a></h2>
+  <p>{{#if content}}{{content}}{{else}}There is no content{{/if}}</p>
+  <p id="author">{{#if author}}{{author}}{{else}}There is no author information provided.{{/if}}</p>
+  <p id="createdDate">{{#if createdDate}}{{createdDate}}{{else}}There are no createdDate{{/if}}</p>
+  <p id="lastChangeDate">{{#if lastChangeDate}}{{lastChangeDate}}{{else}}No changes made to this note.{{/if}}</p>
+  <p id="keywords">{{#if keywords}}{{keywords}}{{else}}There are no keywords{{/if}}</p>
+  {{/each}}
+</ul>
