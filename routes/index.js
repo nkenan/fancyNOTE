@@ -18,7 +18,6 @@ router.get('/', (req, res, next) => {
 //********** LIST NOTES
 router.get('/notes', (req, res, next) => {
   list((result)=> {
-    console.log(result);
     if(result == "") return res.render('index', {title: 'No notes yet'});
     if(result) {
       return res.render('notes', {title: 'My notes', notes: result});}
@@ -60,22 +59,19 @@ router.get('/search', (req, res, next)=> {
 
 });
 router.post('/search', (req, res, next) => {
-  //console.log(`$req.body.noteTitle=${req.body.noteTitle}`);
   if(!req.body.queryProperty) {
     var queryProperty = 'title';
   } else {
     var queryProperty = req.body.queryProperty;
   }
   var queryContent = req.body.queryContent;
-  search(queryProperty,queryContent, (error,result) =>{
-    console.log('ERROR: ', error);
-    console.log('RESULT: ', error);
-
-    if(error) {
-      return res.render('index', {title: 'Could not find your note', content: error});
+  search(queryProperty,queryContent, (result) =>{
+    console.log('HALLO');
+    if(!result) {
+      return res.render('index', {title: 'Could not find your note'});
     } else {
-    res.render('note', {title: result});
-    next();
+    return res.redirect('/note/' + result._id);
+    // return res.render('note', result);
     }
   });
 });
