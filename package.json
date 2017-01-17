@@ -1,20 +1,35 @@
 {
-  "name": "leanserver",
-  "version": "0.0.0",
+  "name": "fancynote",
+  "version": "0.0.1",
   "private": true,
   "scripts": {
     "start": "node ./bin/www"
   },
   "dependencies": {
-    "bluebird": "^3.4.7",
     "body-parser": "~1.15.2",
     "cookie-parser": "~1.4.3",
     "debug": "~2.2.0",
     "express": "~4.14.0",
     "hbs": "~4.0.1",
-    "mongoose": "^4.7.6",
-    "mongoose-text-search": "0.0.2",
     "morgan": "~1.7.0",
     "serve-favicon": "~2.3.0"
-  }
+  },
+  "description": "write your apps and share them with others",
+  "main": "./bin/www",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nzmTINKER/fancyNOTE.git"
+  },
+  "keywords": [
+    "note",
+    "write",
+    "writing",
+    "app"
+  ],
+  "author": "nzmTINKER",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/nzmTINKER/fancyNOTE/issues"
+  },
+  "homepage": "https://github.com/nzmTINKER/fancyNOTE#readme"
 }
