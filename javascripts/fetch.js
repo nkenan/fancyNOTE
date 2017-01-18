@@ -13,24 +13,30 @@ var fetch = (query, callback) => {
       callback(result);
     });
   } else {
-    var fetchedIds = {};
+    var fetchedIds = [];
+    var documentIds = [];
     // find content, title and keywords
     Note.find({title: query}, (error,result) => {
-      Object.assign(fetchedIds, result);
-      console.log(`fetchedIds after title: \n${JSON.stringify(fetchedIds)}`);
-
+      if(result != 'null') {
+        fetchedIds = Object.assign({}, fetchedIds[0], result);
+        documentIds.push(fetchedIds[0]);
+      }
     });
     Note.find({content: query}, (error,result) => {
-      Object.assign(fetchedIds, result);
-      console.log(`fetchedIds after content: \n${JSON.stringify(fetchedIds)}`);
-
+      if(result != 'null') {
+        fetchedIds = Object.assign({}, fetchedIds[0], result);
+        documentIds.push(fetchedIds[0]);
+      }
     });
     Note.find({keywords: query}, (error,result) => {
-      Object.assign(fetchedIds, result);
-      console.log(`fetchedIds after keywords: \n${JSON.stringify(fetchedIds)}`);
-
+      if(result != 'null') {
+        fetchedIds = Object.assign({}, fetchedIds[0], result);
+        documentIds.push(fetchedIds[0]);
+        console.log('typeof: ',typeof documentIds,' - value: ',documentIds);
+        callback(documentIds);
+      }
     });
-    callback(fetchedIds);
+
 }};
 
 module.exports = {fetch};

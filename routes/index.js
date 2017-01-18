@@ -9,13 +9,13 @@ var {fetch} = require('./../javascripts/fetch');
 
 router.post('/search', (req, res, next) => {
   fetch(req.body.query, (notes) => {
-    return res.render('notes', {title: `Results for: ${req.body.query}`, notes});
+    return res.render('notes', {notes: notes});
   });
 });
 
 router.get('/notes', (req, res, next) => {
   fetch('all', (notes) => {
-    return res.render('notes', {title: 'My notes', notes});
+    return res.render('notes', {title: 'My notes', notes: notes});
   });
 });
 
