@@ -9,34 +9,37 @@ var fetch = (query, callback) => {
 
   if(query=='all') {
     Note.find({}, (error,result)=> {
-      console.log(result);
       callback(result);
     });
   } else {
     var fetchedIds = [];
     var documentIds = [];
+
+    var temp;
     // find content, title and keywords
-    Note.find({title: query}, (error,result) => {
-      if(result != 'null') {
+    Note.find({title: {"$regex": query}}, (error,result) => {
+      if(result != "") {
+        console.log(`**********************\nerror: ${error}\nresult: ${result}\n**********************`);
         fetchedIds = Object.assign({}, fetchedIds[0], result);
         documentIds.push(fetchedIds[0]);
-      }
+      };
     });
-    Note.find({content: query}, (error,result) => {
-      if(result != 'null') {
+    Note.find({content: {"$regex": query}}, (error,result) => {
+      if(result != "") {
+        console.log(`**********************\nerror: ${error}\nresult: ${result}\n**********************`);
         fetchedIds = Object.assign({}, fetchedIds[0], result);
         documentIds.push(fetchedIds[0]);
-      }
+      };
     });
-    Note.find({keywords: query}, (error,result) => {
-      if(result != 'null') {
+    Note.find({keywords: {"$regex": query}}, (error,result) => {
+      if(result != "") {
+        console.log(`**********************\nerror: ${error}\nresult: ${result}\n**********************`);
         fetchedIds = Object.assign({}, fetchedIds[0], result);
         documentIds.push(fetchedIds[0]);
-        console.log('typeof: ',typeof documentIds,' - value: ',documentIds);
-        callback(documentIds);
-      }
+      };
+      callback(documentIds);
     });
 
-}};
+  }};
 
 module.exports = {fetch};
