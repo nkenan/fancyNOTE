@@ -1,0 +1,46 @@
+{{! CREATE NEW NOTE}}
+{{#if create}}
+  <form class="form-horizontal" method="post" action="/create">
+    <input type="text" class="form-control" id="title" name="title" placeholder="Title">
+    <textarea type="text" class="form-control" rows="10" id="content" name="content" placeholder="Type your note here."></textarea></p>
+    <input type="text" class="form-control" id="keywords" name="keywords" placeholder="Keywords (seperate them with commata)"></p>
+    <ul class="list-inline text-right">
+      <li><a href="/notes" class="alert alert-information">cancel</a></li>
+      <li><button type="submit" class="btn btn-default">Save</button></li>
+    </ul>
+  </form>
+{{/if}}
+
+{{! VIEW SINGLE NOTE}}
+{{#if view}}
+<main>
+  <h1>{{note.title}}</h1>
+  <p>{{note.content}}</p>
+</main>
+<ul class="list-inline">
+      <li><a href="/notes/{{note._id}}/edit">edit</a></li>
+      <li><a href="/notes/{{note._id}}/public">make public</a></li>
+      <li><a href="/notes/{{note._id}}/share">share</a></li>
+    </ul>
+</ul>
+<ul class="list-inline list-group noteInformations">
+  <li class="list-group-item">Keywords: {{#if note.keywords}}{{note.keywords}}{{else}}No keywords. No keywords. No keywords. No keywords.{{/if}}</li>
+  <li class="list-group-item">Owners: {{#if note.owners}}{{note.owners}}{{else}}You are the only owner.{{/if}}</li>
+  <li class="list-group-item">Editors: {{#if note.editors}}{{note.editors}}{{else}}You are the only editor.{{/if}}</li>
+  <li class="list-group-item">{{#if note.publicNote}}Public: <a href="/notes/{{note._id}}/change">Change</a>{{else}}Private note{{/if}}</li>
+  <li class="list-group-item">ID: {{#if note.id}}{{note.id}}{{else}}No note{{/if}}</li>
+</ul>
+{{/if}}
+
+{{! EDIT NOTE}}
+{{#if edit}}
+  <form class="form-horizontal" method="post" action="/notes/{{note._id}}">
+    <input type="text" class="form-control" id="title" name="title" placeholder="Title" value="{{note.title}}">
+    <textarea type="text" class="form-control" rows="10" id="content" name="content" placeholder="Type your note here.">{{note.content}}</textarea>
+    <input type="text" class="form-control" id="keywords" name="keywords" placeholder="Keywords (seperate them with commata)" value="{{note.keywords}}">
+    <ul class="list-inline text-right">
+      <li><a href="/notes/{{note._id}}/remove" class="text-danger">remove</a></li>
+      <li><button type="submit" class="btn btn-default">Save</button></li>
+    </ul>
+  </form>
+{{/if}}

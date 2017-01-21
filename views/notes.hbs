@@ -3,11 +3,12 @@
     <h1>{{title}}</h1>
   </div>
 </div>
+{{#if notes}}
 {{#each notes}}
 <div class="notes">
   <div class="row">
     <div class="col-sm-12 title">
-      <h2>{{#if title}}{{title}}{{else}}No title{{/if}}</h2>
+      <h2>{{#if title}} <a href="/notes/{{_id}}">{{title}}</a> {{else}}No title{{/if}}</h2>
     </div>
   </div>
   <div class="row">
@@ -16,12 +17,12 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-lg-4 col-sm-6 keywords">
-      <p>Keywords: {{#if keywords}}{{keywords}}{{else}}No keywords provided.{{/if}}</p>
-    </div>
-    <div class="col-lg-4 col-sm-6 id">
-      <p>ID: {{id}}</p>
+    <div class="col-sm-12 content keywords">
+      <p>Keywords: {{#if keywords}}{{keywords}}{{else}}No keywords provided.{{/if}} &#183; ID: {{id}}</p>
     </div>
   </div>
 </div>
 {{/each}}
+{{else}}
+<p>There are no notes. <a href="/create">Create</a> one?
+{{/if}}

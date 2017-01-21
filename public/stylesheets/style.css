@@ -1,3 +1,8 @@
+  @keyframes fadeIn {
+    from {opacity: 0}
+    to {opacity: 1}
+}
+
 body {
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
@@ -9,4 +14,22 @@ a {
 
 .notes p {
   text-align: justify;
+}
+
+main {
+  margin-bottom: 30px;
+  margin-top: 30px;
+  animation-name: fadeIn;
+  animation-duration: 0.2s;
+}
+
+main {
+  font-size: 14pt;
+  color: #333;
+}
+
+.noteInformations li, .noteController {
+  color: #777;
+  border: none;
+  padding: 1px;
 }
