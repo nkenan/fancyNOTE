@@ -7,7 +7,9 @@ var note = new mongoose.Schema({
   publicNote: {type: Boolean, default: false},
   title: { type: String, trim: true },
   content: { type: String, trim: true },
-  keywords: [{ type: String, trim: true }]
+  keywords: [{ type: String, trim: true }],
+  categories: [{ type: String, trim: true }],
+  created: {type: Date, default: Date.now}  
 });
 
 var Note = mongoose.model('Note', note);

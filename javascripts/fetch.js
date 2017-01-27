@@ -7,44 +7,59 @@ var fetch = (type, query, callback) => {
   //byId - should search by id and pass to hbs
   //content - should search all string-type properties (title, content, keywords)
 
+  //********* FETCHING ALL NOTES *********
   if(type=='all') {
-    Note.find({}, (error,result)=> {
-      callback(result);
-    }).sort({created: 1});
-  };
-  if(type=='text') {
-    var fetchedIds = [];
-    var documentIds = [];
-    // find content, title and keywords
-    Note.find({title: {"$regex": query}}, (error,result) => {
-      if(result != "") {
-        fetchedIds = Object.assign({}, fetchedIds[0], result);
-        documentIds.push(fetchedIds[0]);
-      };
+    Note.find({})
+    .then(
+      (result)=> {
+        callback(result);
+      })
+    .catch(
+      (error) => {
+        console.log(`******Error reading database:\n${error}\n******End of error message`);
+        callback(error)
     });
-    Note.find({content: {"$regex": query}}, (error,result) => {
-      if(result != "") {
-        fetchedIds = Object.assign({}, fetchedIds[0], result);
-        documentIds.push(fetchedIds[0]);
-      };
-    });
-    Note.find({keywords: {"$regex": query}}, (error,result) => {
-      if(result != "") {
-        fetchedIds = Object.assign({}, fetchedIds[0], result);
-        documentIds.push(fetchedIds[0]);
-      };
-
-    });
-    console.log(JSON.stringify(documentIds[0]));
-    callback(documentIds);
-
   };
 
+  //********* SEARCHING BY PROVIDED TEXT IN TITLE, CONTENT AND KEYWORDS *********
+  if(type=='text') {};
+
+  //********* SEARCHING FOR KEYWORDS *********
+  if(type=='keywords') {
+    var documents = [];
+    Note.find({keywords: {"$regex": query}})
+    .then(
+      (result) => {
+        for (let i of result) {
+          documents.push(i);
+        };
+        callback(documents);
+      }
+    )
+    .catch(
+      (error) => {
+        return console.log(error);
+      }
+    );
+  };
+
+
+  //********* SEARCHING BY ID *********
   if(type=='id') {
-    Note.findById(query, (error,result)=> {
-      callback(result);
-    });
+    Note.findById(query)
+    .then(
+      (result) => {
+        callback(result)
+      }
+    )
+    .catch(
+      (error) => {
+        console.log(error);
+        callback(error)
+      }
+    );
   };
+
 };
 
 module.exports = {fetch};

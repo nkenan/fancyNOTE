@@ -1,9 +1,10 @@
 {{! CREATE NEW NOTE}}
 {{#if create}}
+  <br/>
   <form class="form-horizontal" method="post" action="/create">
     <input type="text" class="form-control" id="title" name="title" placeholder="Title">
     <textarea type="text" class="form-control" rows="10" id="content" name="content" placeholder="Type your note here."></textarea></p>
-    <input type="text" class="form-control" id="keywords" name="keywords" placeholder="Keywords (seperate them with commata)"></p>
+    <input type="text" class="form-control" id="keywords" name="keywords" placeholder="Keywords (seperate with comma)"></p>
     <ul class="list-inline text-right">
       <li><a href="/notes" class="alert alert-information">cancel</a></li>
       <li><button type="submit" class="btn btn-default">Save</button></li>
@@ -14,8 +15,10 @@
 {{! VIEW SINGLE NOTE}}
 {{#if view}}
 <main>
-  <h1>{{note.title}}</h1>
-  <p>{{note.content}}</p>
+  <div class="note">
+    <h1>{{note.title}}</h1>
+    <p>{{note.content}}</p>
+  </div>
 </main>
 <ul class="list-inline">
       <li><a href="/notes/{{note._id}}/edit">edit</a></li>

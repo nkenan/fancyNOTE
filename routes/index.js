@@ -1,9 +1,8 @@
 var express = require('express');
 var router = express.Router();
 
-
-var {createNote} = require('./../javascripts/createNote');
 var {fetch} = require('./../javascripts/fetch');
+var {createNote} = require('./../javascripts/createNote');
 var {updateNote} = require('./../javascripts/updateNote');
 var {removeNote} = require('./../javascripts/removeNote');
 
@@ -58,6 +57,13 @@ router.get('/notes/:id/remove', (req, res, next) => {
 router.post('/search', (req, res, next) => {
   fetch('text', req.body.query, (notes) => {
     return res.render('notes', {notes: notes});
+  });
+});
+/**** VIEW SINGLE KEYWORDS *****/
+router.get('/keywords/:id', (req, res, next) => {
+  fetch('keywords', req.params.id, (notes) => {
+    console.log(`************\n${notes}\n*************`);
+    return res.render('notes', {title: 'Keyword \"' + req.params.id + '\"', notes: notes});
   });
 });
 
