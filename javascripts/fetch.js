@@ -2,6 +2,10 @@ var {mongoose} = require('./../database/mongoose');
 var {Note} = require('./../models/Note');
 
 var fetch = (type, query, callback) => {
+  console.log(query);
+  var query = new RegExp(query, 'i');
+
+  console.log(query);
   //callback(result) - passing results as object to hbs (iteration!)
   //all - should put all allResults in one object and pass them to hbs
   //byId - should search by id and pass to hbs
@@ -24,6 +28,7 @@ var fetch = (type, query, callback) => {
   if(type=='text') {
     var allResults = [];
     var newResults = [];
+
     Note.find({title: {"$regex": query}})
     .then(
       (result) => {
@@ -31,7 +36,6 @@ var fetch = (type, query, callback) => {
           newResults = Object.assign({}, newResults[0], result);
           allResults.push(newResults[0]);
         };
-        console.log(`*** allResults TITLE: ${allResults}`);
         return Note.find({content: {"$regex": query}});
       }
     )
@@ -41,7 +45,6 @@ var fetch = (type, query, callback) => {
           newResults = Object.assign({}, newResults[0], result);
           allResults.push(newResults[0]);
         };
-        console.log(`*** allResults CONTENT: ${allResults}`);
         return Note.find({keywords: {"$regex": query}});
       }
     )
@@ -51,15 +54,12 @@ var fetch = (type, query, callback) => {
           newResults = Object.assign({}, newResults[0], result);
           allResults.push(newResults[0]);
         };
-        console.log(`*** allResults KEYWORDS: ${allResults}`);
         callback(allResults);
       }
     ).catch((error) => {
-      console.log(`ERROR WITHIN TYPE==TEXT:\n${error}`);
       callback(error)
     });
     //console.log(typeof allResults);
-
   };
 
   //********* SEARCHING FOR KEYWORDS *********
