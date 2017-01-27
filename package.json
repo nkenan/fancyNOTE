@@ -32,5 +32,6 @@
   "bugs": {
     "url": "https://github.com/nzmTINKER/fancyNOTE/issues"
   },
-  "homepage": "https://github.com/nzmTINKER/fancyNOTE#readme"
+  "homepage": "https://github.com/nzmTINKER/fancyNOTE#readme",
+  "devDependencies": {}
 }

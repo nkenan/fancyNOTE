@@ -56,7 +56,7 @@ router.get('/notes/:id/remove', (req, res, next) => {
 /**** SEARCH FOR NOTES *****/
 router.post('/search', (req, res, next) => {
   fetch('text', req.body.query, (notes) => {
-    return res.render('notes', {notes: notes});
+    return res.render('notes', {title: 'Results for "' + req.body.query + '"', notes: notes});
   });
 });
 /**** VIEW SINGLE KEYWORDS *****/
