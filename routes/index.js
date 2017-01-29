@@ -7,6 +7,8 @@ var {updateNote} = require('./../javascripts/updateNote');
 var {removeNote} = require('./../javascripts/removeNote');
 var {createUser} = require('./../javascripts/createUser');
 
+var {authenticate} = require('./../middleware/authenticate');
+
 /**** LANDING PAGE *****/
 router.get('/', function(req, res, next) {
   res.render('landingPage');
@@ -50,6 +52,11 @@ router.post('/user', (req, res) => {
   )
   ;}
 );
+
+/**** /USERS/ME *****/
+router.get('/users/me', authenticate, (req,res) => {
+  res.send(req.user);
+});
 
 
 /**** VIEW SINGLE NOTE *****/
