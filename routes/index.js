@@ -7,47 +7,67 @@ var {updateNote} = require('./../javascripts/updateNote');
 var {removeNote} = require('./../javascripts/removeNote');
 var {createUser} = require('./../javascripts/createUser');
 
+/**** LANDING PAGE *****/
 router.get('/', function(req, res, next) {
   res.render('landingPage');
   //res.redirect('/notes');
 });
 
-/**** CREATE NEW USER *****/
-router.post('/user', (req, res) => {
-  createUser(req.body.email,req.body.password).then(
-    (result)=>{
-      return res.redirect('/notes');
-    },
-    (error)=>
-    {
-      return res.render('landingPage', {error: true});;
-    });
-});
 
 /**** CREATE SINGLE NOTE *****/
 router.get('/create', (req, res, next) => {
   res.render('note', {title: 'Create a new note', create: true});
 });
 router.post('/create', (req, res, next) => {
-  createNote(req.body.owners,req.body.editors,req.body.publicNote,req.body.title,req.body.content,req.body.keywords.split(','), (error,result)=> {
-    if(error) {
-      return res.render('error', {error});
-    };
-    return res.redirect('/notes');
-  });
+  createNote(req.body.owners,req.body.editors,req.body.publicNote,req.body.title,req.body.content,req.body.keywords.split(','))
+  .then(
+    (result) => {
+      res.redirect('/notes')
+    },
+    (error) => {
+      res.redirect('/notes');
+    }
+  );
 });
+
+
+/**** CREATE NEW USER *****/
+
+const {User} = require('./../models/User');
+router.post('/user', (req, res) => {
+  var user = new User({email: req.body.email,password: req.body.password});
+  user.save().then(
+    () => {
+    return user.generateAuthToken();
+  })
+  .then(
+    (token) => {
+    res.header('x-auth', token).send(user);
+  }).catch(
+    (error) => {
+      return console.log(error);
+    }
+  )
+  ;}
+);
+
+
 /**** VIEW SINGLE NOTE *****/
 router.get('/notes/:id' , (req,res,next) => {
   fetch('id', req.params.id, (note) => {
     res.render('note', {note: note, view: true});
   });
 });
+
+
 /**** LIST ALL NOTES *****/
 router.get('/notes', (req, res, next) => {
   fetch('all', undefined, (notes) => {
     return res.render('notes', {title: 'My notes', notes: notes});
   });
 });
+
+
 /**** EDIT SINGLE NOTE *****/
 router.get('/notes/:id/edit', (req,res,next) => {
   fetch('id', req.params.id, (note) => {
@@ -60,6 +80,8 @@ router.post('/notes/:id', (req,res,next) => {
     return res.redirect(`/notes/${req.params.id}`);
   });
 });
+
+
 /**** REMOVE SINGLE NOTES *****/
 router.get('/notes/:id/remove', (req, res, next) => {
   removeNote(req.params.id, (error,document) => {
@@ -73,12 +95,14 @@ router.post('/search', (req, res, next) => {
   });
 });
 
+
 /**** SEARCH FOR KEYWORDS *****/
 router.get('/keywords/:id', (req, res, next) => {
   fetch('keywords', req.params.id, (notes) => {
     return res.render('notes', {title: 'Keyword \"' + req.params.id + '\"', notes: notes});
   });
 });
+
 
 /**** CUSTOMER AND ADMINISTRATIVE ROUTES *****/
 router.get('/help', (req, res, next) => {

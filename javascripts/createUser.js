@@ -1,16 +1,14 @@
 const {mongoose} = require('./../database/mongoose');
 const {User} = require('./../models/User');
 
-var createUser = (email, password, callback) => {
+var createUser = (email, password) => {
   return new Promise ((resolve,reject) => {
     var user = new User({email,password});
-    user.save().then((document) => {
-      console.log(`SAVING NEW USER: ${email}`);
-      resolve(undefined,document);
-    },(error)=>{
-      console.log(`ERROR SAVING NEW USER: ${email}`);
-      reject(error,undefined);
-    });
+    user.save().then(
+      (user) => {
+      console.log(`CREATING NEW USER: ${email}`);
+      return user.generateAuthToken();
+      });
   });
 };
 
