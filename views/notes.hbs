@@ -5,35 +5,33 @@
 </div>
 {{#if notes}}
 {{#each notes}}
-<div class="note">
-  <div class="row">
-    <div class="col-sm-12 title">
-      <h2><a href="/notes/{{_id}}">{{#if title}}{{title}}{{else}}No title{{/if}}</a></h2>
+<main>
+  <div class="note">
+    <div class="row">
+      <div class="col-xs-12 title">
+        <h2><a href="/notes/{{_id}}">{{#if title}}{{title}}{{else}}No title{{/if}}</a></h2>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12 content">
+        <p>{{#if content}}{{content}}{{else}}No content{{/if}}</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-8">
+        <p><em>
+          {{#if keywords}}
+              {{#each keywords}} <a href="/keywords/{{this}}">{{this}}</a>{{#unless @last}}, {{/unless}}
+              {{/each}}
+            {{else}}No keywords provided.{{/if}}
+        </em></p>
+      </div>
+      <div class="col-xs-4">
+        <p><em>{{#if created}}{{created}}{{/if}}</em></p>
+      </div>
     </div>
   </div>
-  <div class="row">
-    <div class="col-sm-12 content">
-      <p>{{#if content}}{{content}}{{else}}No content{{/if}}</p>
-    </div>
-  </div>
-  <div class="row">
-    <ul class="list-inline">
-      <li>
-        <div class="col-sm-12 content keywords">
-        <p><em>{{#if keywords}}
-            {{#each keywords}} <a href="/keywords/{{this}}">{{this}}</a>{{#unless @last}}, {{/unless}}
-            {{/each}}
-          {{else}}No keywords provided.{{/if}}</em></p>
-        </div>
-      </li>
-      <li>
-        <div class="col-sm-12 content">
-          <p><em>{{#if created}}{{this.created}}{{else}}.{{/if}}</em></p>
-        </div>
-      </li>
-    </ul>
-  </div>
-</div>
+</main>
 {{/each}}
 {{else}}
 <p>There are no notes. <a href="/create">Create</a> one?

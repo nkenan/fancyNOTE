@@ -2,10 +2,6 @@ var {mongoose} = require('./../database/mongoose');
 var {Note} = require('./../models/Note');
 
 var fetch = (type, query, callback) => {
-  console.log(query);
-  var query = new RegExp(query, 'i');
-
-  console.log(query);
   //callback(result) - passing results as object to hbs (iteration!)
   //all - should put all allResults in one object and pass them to hbs
   //byId - should search by id and pass to hbs
@@ -26,6 +22,7 @@ var fetch = (type, query, callback) => {
 
   //********* SEARCHING BY PROVIDED TEXT IN TITLE, CONTENT AND KEYWORDS *********
   if(type=='text') {
+    var query = new RegExp(query, 'i');
     var allResults = [];
     var newResults = [];
 
@@ -64,7 +61,7 @@ var fetch = (type, query, callback) => {
 
   //********* SEARCHING FOR KEYWORDS *********
   if(type=='keywords') {
-    var allResults = [];
+    var query = new RegExp(query, 'i');
     Note.find({keywords: {"$regex": query}})
     .then(
       (result) => {

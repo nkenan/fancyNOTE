@@ -16,7 +16,8 @@
     "hbs": "~4.0.1",
     "mongoose": "^4.7.7",
     "morgan": "~1.7.0",
-    "serve-favicon": "~2.3.0"
+    "serve-favicon": "~2.3.0",
+    "validator": "^6.2.1"
   },
   "description": "write your apps and share them with others",
   "main": "./bin/www",

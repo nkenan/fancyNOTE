@@ -5,10 +5,23 @@ var {fetch} = require('./../javascripts/fetch');
 var {createNote} = require('./../javascripts/createNote');
 var {updateNote} = require('./../javascripts/updateNote');
 var {removeNote} = require('./../javascripts/removeNote');
-
+var {createUser} = require('./../javascripts/createUser');
 
 router.get('/', function(req, res, next) {
-  res.redirect('/notes');
+  res.render('landingPage');
+  //res.redirect('/notes');
+});
+
+/**** CREATE NEW USER *****/
+router.post('/user', (req, res) => {
+  createUser(req.body.email,req.body.password).then(
+    (result)=>{
+      return res.redirect('/notes');
+    },
+    (error)=>
+    {
+      return res.render('landingPage', {error: true});;
+    });
 });
 
 /**** CREATE SINGLE NOTE *****/
@@ -42,7 +55,7 @@ router.get('/notes/:id/edit', (req,res,next) => {
   });
 });
 router.post('/notes/:id', (req,res,next) => {
-  updateNote(req.params.id,req.body.owners,req.body.editors,req.body.publicNote,req.body.title,req.body.content,req.body.keywords.split(','), (error,document) => {
+  updateNote(req.params.id,req.body.owners,req.body.editors,req.body.publicNote,req.body.title,req.body.content,req.body.keywords.split(','),req.body.created, (error,document) => {
     if(error) return console.log('ERROR');
     return res.redirect(`/notes/${req.params.id}`);
   });
@@ -59,10 +72,10 @@ router.post('/search', (req, res, next) => {
     return res.render('notes', {title: 'Results for "' + req.body.query + '"', notes: notes});
   });
 });
-/**** VIEW SINGLE KEYWORDS *****/
+
+/**** SEARCH FOR KEYWORDS *****/
 router.get('/keywords/:id', (req, res, next) => {
   fetch('keywords', req.params.id, (notes) => {
-    console.log(`************\n${notes}\n*************`);
     return res.render('notes', {title: 'Keyword \"' + req.params.id + '\"', notes: notes});
   });
 });
