@@ -54,7 +54,7 @@ router.post('/user', (req, res) => {
 );
 
 /**** /USERS/ME *****/
-router.get('/users/me', authenticate, (req,res) => {
+router.get('/users/me', authenticate, (req, res) => {
   res.send(req.user);
 });
 
